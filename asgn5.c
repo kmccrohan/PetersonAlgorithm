@@ -108,8 +108,14 @@ int main(int argc, char** argv){
   // Allocate shared memories.
 
   // Fork child and process.
-
-  // Run parent and child methods.
+  int value;
+  if ((value = fork()) < 0)
+    printf("Child could not be created\n");
+  else
+    if (value == 0) // child
+      child();
+    else // parent
+      parent();
 
   // Cleanup.
 }
