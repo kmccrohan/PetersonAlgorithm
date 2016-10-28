@@ -6,7 +6,7 @@
 
 //A Struct to store the Peterson Algorithm variables
 typedef struct {
-  int[2];
+  int flag[2];
   int turn;
 }PetersonLock;
 
@@ -40,8 +40,8 @@ void parse_args(int argc, char** argv)
   // default values if argc =1
   else if (argc == 1)
   {
-     time_parent = 3;
-     time_child = 3;
+     time_parent = 2;
+     time_child = 2;
      time_parent_non_cs = 1;
      time_child_non_cs = 1;
   }
@@ -54,6 +54,69 @@ void parse_args(int argc, char** argv)
 
 }
 
+/**
+Executes the CS for either parent or child.
+*/
+void cs(char process, int time_crit_sect)
+{
+ if (process == 'p')
+  {
+   printf("parent in critical sction\n");
+   sleep(time_crit_sect);
+   printf("parent leaving critical section\n");
+  }
+ else
+  {
+   printf("child in critical sction\n");
+   sleep(time_crit_sect);
+   printf("chile leaving critical section\n");
+  }
+}
+
+/**
+Executes the non CS for both.
+*/
+void non_cs(int time_non_crit_sect)
+{
+ sleep(time_non_crit_sect);
+}
+
+/**
+Loops the parent through the critical and non critical sections.
+*/
+void parent()
+{
+ for (int i = 0; i < 10; i++)
+  {
+   //protect this
+   cs('p', time_parent);
+   non_cs(time_parent_non_cs); 
+  }
+}
+
+/**
+Loops the child through the critical and non critical sections.
+*/
+void child()
+{
+ for (int i = 0; i < 10; i++)
+  {
+   //protect this
+   cs('c', time_child);
+   non_cs(time_child_non_cs); 
+  }
+}
+
 int main(int argc, char** argv){
 
+  // Parse arguments.
+  parse_args(argc, argv);
+
+  // Allocate shared memories.
+
+  // Fork child and process.
+
+  // Run parent and child methods.
+
+  // Cleanup.
 }
