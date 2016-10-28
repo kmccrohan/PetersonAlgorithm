@@ -116,7 +116,12 @@ void child()
  for (int i = 0; i < 10; i++)
   {
    //protect this
-   cs('c', time_child);
+   lock->flag[1] = 1;
+   lock->turn = 0;
+   while (lock->flag[0] && lock->turn == 0);
+   cs('c', time_child);	// critical section
+   lock->flag[1] = 0;
+
    non_cs(time_child_non_cs);
   }
 }
