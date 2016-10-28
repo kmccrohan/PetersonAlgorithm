@@ -27,7 +27,7 @@ void allocate_shared_memory()
   shared_memory_id = shmget(IPC_PRIVATE, sizeof(PetersonLock), IPC_CREAT | 0666);
   if(shared_memory_id < 0)
   {
-    fprintf(stderr, "shmget: failed in an unexpected way");
+    fprintf(stderr, "shmget: failed in an unexpected way\n");
     exit(1);
   }
 
@@ -35,6 +35,15 @@ void allocate_shared_memory()
   lock->flag[0] = 0;
   lock->flag[1] = 0;
   lock->turn = -1;
+}
+
+void deallocate_shared_memory()
+{
+  int return_value = shmdt(lock);
+  if(return_value < 0){
+    fprintf(stderr, "shmdt failed with error code: %d\n", return_value);
+    exit(1);
+  }
 }
 
 /**
