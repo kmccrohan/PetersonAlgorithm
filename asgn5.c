@@ -103,7 +103,11 @@ void parent()
  for (int i = 0; i < 10; i++)
   {
    //protect this
+   lock->flag[0] = 1;
+   lock->turn = 1;
+   while(lock->flag[1] && lock->turn == 1);
    cs('p', time_parent);
+   lock->flag[0] = 0;
    non_cs(time_parent_non_cs);
   }
 }
