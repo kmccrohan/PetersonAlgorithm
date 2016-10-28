@@ -6,7 +6,7 @@
 
 //A Struct to store the Peterson Algorithm variables
 typedef struct {
-  int[2];
+  int flag[2];
   int turn;
 }PetersonLock;
 
@@ -102,4 +102,14 @@ void child()
 
 int main(int argc, char** argv){
 
+  // Parse arguments.
+  parse_args(argc, argv);
+
+  // Allocate shared memories.
+
+  // Fork child and process.
+
+  // Run parent and child methods.
+
+  // Cleanup.
 }
