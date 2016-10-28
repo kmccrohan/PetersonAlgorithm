@@ -37,10 +37,14 @@ void allocate_shared_memory()
   lock->turn = -1;
 }
 
+/**
+Deallocates shared memory.
+*/
 void deallocate_shared_memory()
 {
   int return_value = shmdt(lock);
-  if(return_value < 0){
+  if(return_value < 0)
+  {
     fprintf(stderr, "shmdt failed with error code: %d\n", return_value);
     exit(1);
   }
@@ -138,6 +142,9 @@ void child()
 
    non_cs(time_child_non_cs);
   }
+
+  // exit child.
+  exit(0);
 }
 
 int main(int argc, char** argv){
@@ -159,4 +166,5 @@ int main(int argc, char** argv){
       parent();
 
   // Cleanup.
+  deallocate_shared_memory();
 }
