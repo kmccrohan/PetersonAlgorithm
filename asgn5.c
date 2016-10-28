@@ -5,7 +5,8 @@
 #include <unistd.h>
 
 //A Struct to store the Peterson Algorithm variables
-typedef struct {
+typedef struct
+{
   int flag[2];
   int turn;
 }PetersonLock;
@@ -15,12 +16,24 @@ int time_parent;
 int time_child;
 int time_parent_non_cs;
 int time_child_non_cs;
+int shared_memory_id;
+PetersonLock* lock = NULL;
 
 /**
 * This function will allocate the peterson data in shared memory
 */
-void allocate_shared_memory(){
+void allocate_shared_memory()
+{
+  shared_memory_id = shmget(IPC_PRIVATE, sizeof(PetersonLock), IPC_CREAT | 0666);
+  if(shared_memory_id < 0)
+  {
+    fprintf(stderr, "shmget: failed in an unexpected way");
+    exit(1);
+  }
 
+  lock = (PetersonLock*) shmat(shared_memory_id, NULL, 0);
+  lock->flag = {0,0};
+  lock->turn = -1;
 }
 
 /**
@@ -90,7 +103,7 @@ void parent()
   {
    //protect this
    cs('p', time_parent);
-   non_cs(time_parent_non_cs); 
+   non_cs(time_parent_non_cs);
   }
 }
 
@@ -103,7 +116,7 @@ void child()
   {
    //protect this
    cs('c', time_child);
-   non_cs(time_child_non_cs); 
+   non_cs(time_child_non_cs);
   }
 }
 
