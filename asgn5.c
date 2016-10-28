@@ -32,7 +32,8 @@ void allocate_shared_memory()
   }
 
   lock = (PetersonLock*) shmat(shared_memory_id, NULL, 0);
-  lock->flag = {0,0};
+  lock->flag[0] = 0;
+  lock->flag[1] = 0;
   lock->turn = -1;
 }
 
@@ -126,6 +127,7 @@ int main(int argc, char** argv){
   parse_args(argc, argv);
 
   // Allocate shared memories.
+  allocate_shared_memory();
 
   // Fork child and process.
 
