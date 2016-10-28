@@ -83,7 +83,7 @@ void cs(char process, int time_crit_sect)
   {
    printf("child in critical sction\n");
    sleep(time_crit_sect);
-   printf("chile leaving critical section\n");
+   printf("child leaving critical section\n");
   }
 }
 
@@ -108,6 +108,7 @@ void parent()
    while(lock->flag[1] && lock->turn == 1);
    cs('p', time_parent);
    lock->flag[0] = 0;
+
    non_cs(time_parent_non_cs);
   }
 }
