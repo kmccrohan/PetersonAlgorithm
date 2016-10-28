@@ -17,6 +17,13 @@ int time_parent_non_cs;
 int time_child_non_cs;
 
 /**
+* This function will allocate the peterson data in shared memory
+*/
+void allocate_shared_memory(){
+
+}
+
+/**
 Parses command line arguments and stores values.
 Exits if invalid number of args.
 */
